@@ -1,0 +1,9 @@
+---
+blackfire_ca_cert:      ""
+blackfire_collector:    "https://blackfire.io"
+blackfire_log_file:     "stderr"
+blackfire_log_level:    "1"
+blackfire_server_id:    ""
+blackfire_server_token: ""
+blackfire_socket:       "socket=unix:///usr/local/var/run/blackfire-agent.sock"
+blackfire_spec:         ""

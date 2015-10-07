@@ -1,0 +1,40 @@
+---
+
+- name: 'blackfire:add:apt_key'
+  tags: blackfire
+  apt_key:
+    url: "https://packagecloud.io/gpg.key"
+    state: present
+
+- name: 'blackfire:add:apt_repository'
+  tags: blackfire
+  apt_repository:
+    repo: 'deb http://packages.blackfire.io/debian any main'
+    state: present
+    update_cache: yes
+
+- name: 'blackfire:install:package:agent'
+  tags: blackfire
+  apt: name=blackfire-agent state=present
+
+- name: 'blackfire:install:package:php'
+  tags: blackfire
+  apt: name=blackfire-php state=present
+
+- name: 'blackfire:configure:agent'
+  tags: blackfire
+  template:
+    src=agent.j2
+    dest=/etc/blackfire/agent
+    owner=0
+    group=0
+    mode=0644
+  register: agent_configuration_state
+
+- name: 'blackfire:restart:agent'
+  tags: blackfire
+  service: name=blackfire-agent state=restarted
+#  notify:
+#    - service:php-fpm:restart
+#    - restart apache
+  when: agent_configuration_state|changed
