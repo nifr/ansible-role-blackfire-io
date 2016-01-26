@@ -34,7 +34,9 @@
 - name: 'blackfire:restart:agent'
   tags: blackfire
   service: name=blackfire-agent state=restarted
+  ignore_errors: yes
 #  notify:
 #    - service:php-fpm:restart
 #    - restart apache
   when: agent_configuration_state|changed
+
